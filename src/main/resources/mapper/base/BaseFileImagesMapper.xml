@@ -1,0 +1,990 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tdeado.file.dao.base.BaseFileImagesMapper">
+
+
+    <insert id="insertFileImages"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `td_file_images`
+        (
+        <trim suffixOverrides=",">
+                    <if test="id!=null">
+                        `id`,
+                    </if>
+                    <if test="type!=null">
+                        `type`,
+                    </if>
+                    <if test="path!=null">
+                        `path`,
+                    </if>
+                    <if test="filename!=null">
+                        `filename`,
+                    </if>
+                    <if test="address!=null">
+                        `address`,
+                    </if>
+                    <if test="createTime!=null">
+                        `create_time`,
+                    </if>
+                    <if test="updateTime!=null">
+                        `update_time`,
+                    </if>
+                    <if test="source!=null">
+                        `source`,
+                    </if>
+                    <if test="thumbnail!=null">
+                        `thumbnail`,
+                    </if>
+                    <if test="size!=null">
+                        `size`,
+                    </if>
+                    <if test="width!=null">
+                        `width`,
+                    </if>
+                    <if test="height!=null">
+                        `height`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="id!=null">
+                    #{id},
+                </if>
+                <if test="type!=null">
+                    #{type},
+                </if>
+                <if test="path!=null">
+                    #{path},
+                </if>
+                <if test="filename!=null">
+                    #{filename},
+                </if>
+                <if test="address!=null">
+                    #{address},
+                </if>
+                <if test="createTime!=null">
+                    #{createTime},
+                </if>
+                <if test="updateTime!=null">
+                    #{updateTime},
+                </if>
+                <if test="source!=null">
+                    #{source},
+                </if>
+                <if test="thumbnail!=null">
+                    #{thumbnail},
+                </if>
+                <if test="size!=null">
+                    #{size},
+                </if>
+                <if test="width!=null">
+                    #{width},
+                </if>
+                <if test="height!=null">
+                    #{height},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+    <update id="updateFileImages">
+        UPDATE `td_file_images`
+        SET
+        <trim suffixOverrides=",">
+            <if test="type != null and type!=''">
+                `type` = #{type},
+            </if>
+            <if test="path != null and path!=''">
+                `path` = #{path},
+            </if>
+            <if test="filename != null and filename!=''">
+                `filename` = #{filename},
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address},
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime},
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source},
+            </if>
+            <if test="thumbnail != null and thumbnail!=''">
+                `thumbnail` = #{thumbnail},
+            </if>
+            <if test="size != null">
+                `size` = #{size},
+            </if>
+            <if test="width != null">
+                `width` = #{width},
+            </if>
+            <if test="height != null">
+                `height` = #{height},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `id` = #{id} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `td_file_images`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.type != null and set.type!=''">
+            `type` = #{set.type},
+        </if>
+        <if test="set.path != null and set.path!=''">
+            `path` = #{set.path},
+        </if>
+        <if test="set.filename != null and set.filename!=''">
+            `filename` = #{set.filename},
+        </if>
+        <if test="set.address != null and set.address!=''">
+            `address` = #{set.address},
+        </if>
+        <if test="set.createTime != null">
+            `create_time` = #{set.createTime},
+        </if>
+        <if test="set.updateTime != null">
+            `update_time` = #{set.updateTime},
+        </if>
+        <if test="set.source != null and set.source!=''">
+            `source` = #{set.source},
+        </if>
+        <if test="set.thumbnail != null and set.thumbnail!=''">
+            `thumbnail` = #{set.thumbnail},
+        </if>
+        <if test="set.size != null">
+            `size` = #{set.size},
+        </if>
+        <if test="set.width != null">
+            `width` = #{set.width},
+        </if>
+        <if test="set.height != null">
+            `height` = #{set.height},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.idList != null">
+                    `id` in
+                    <foreach collection="where.idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.idSt !=null">
+                `id` >= #{where.idSt} and
+            </if>
+            <if test="where.idEd!=null">
+                `id` &lt;= #{where.idEd} and
+            </if>
+                <if test="where.typeList != null">
+                    `type` in
+                    <foreach collection="where.typeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyType!=null and where.fuzzyType.size()>0">
+                (
+                <foreach collection="where.fuzzyType"  separator="or" item="item">
+                    `Type` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyType!=null and where.rightFuzzyType.size()>0">
+                (
+                <foreach collection="where.rightFuzzyType"  separator="or" item="item">
+                    `Type` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.pathList != null">
+                    `path` in
+                    <foreach collection="where.pathList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyPath!=null and where.fuzzyPath.size()>0">
+                (
+                <foreach collection="where.fuzzyPath"  separator="or" item="item">
+                    `Path` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyPath!=null and where.rightFuzzyPath.size()>0">
+                (
+                <foreach collection="where.rightFuzzyPath"  separator="or" item="item">
+                    `Path` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.filenameList != null">
+                    `filename` in
+                    <foreach collection="where.filenameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyFilename!=null and where.fuzzyFilename.size()>0">
+                (
+                <foreach collection="where.fuzzyFilename"  separator="or" item="item">
+                    `Filename` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyFilename!=null and where.rightFuzzyFilename.size()>0">
+                (
+                <foreach collection="where.rightFuzzyFilename"  separator="or" item="item">
+                    `Filename` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.addressList != null">
+                    `address` in
+                    <foreach collection="where.addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyAddress!=null and where.fuzzyAddress.size()>0">
+                (
+                <foreach collection="where.fuzzyAddress"  separator="or" item="item">
+                    `Address` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyAddress!=null and where.rightFuzzyAddress.size()>0">
+                (
+                <foreach collection="where.rightFuzzyAddress"  separator="or" item="item">
+                    `Address` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.createTimeList != null">
+                    `create_time` in
+                    <foreach collection="where.createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.createTimeSt !=null">
+                `create_time` >= #{where.createTimeSt} and
+            </if>
+            <if test="where.createTimeEd!=null">
+                `create_time` &lt;= #{where.createTimeEd} and
+            </if>
+                <if test="where.updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="where.updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.updateTimeSt !=null">
+                `update_time` >= #{where.updateTimeSt} and
+            </if>
+            <if test="where.updateTimeEd!=null">
+                `update_time` &lt;= #{where.updateTimeEd} and
+            </if>
+                <if test="where.sourceList != null">
+                    `source` in
+                    <foreach collection="where.sourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzySource!=null and where.fuzzySource.size()>0">
+                (
+                <foreach collection="where.fuzzySource"  separator="or" item="item">
+                    `Source` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzySource!=null and where.rightFuzzySource.size()>0">
+                (
+                <foreach collection="where.rightFuzzySource"  separator="or" item="item">
+                    `Source` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.thumbnailList != null">
+                    `thumbnail` in
+                    <foreach collection="where.thumbnailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyThumbnail!=null and where.fuzzyThumbnail.size()>0">
+                (
+                <foreach collection="where.fuzzyThumbnail"  separator="or" item="item">
+                    `Thumbnail` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyThumbnail!=null and where.rightFuzzyThumbnail.size()>0">
+                (
+                <foreach collection="where.rightFuzzyThumbnail"  separator="or" item="item">
+                    `Thumbnail` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.sizeList != null">
+                    `size` in
+                    <foreach collection="where.sizeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.sizeSt !=null">
+                `size` >= #{where.sizeSt} and
+            </if>
+            <if test="where.sizeEd!=null">
+                `size` &lt;= #{where.sizeEd} and
+            </if>
+                <if test="where.widthList != null">
+                    `width` in
+                    <foreach collection="where.widthList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.widthSt !=null">
+                `width` >= #{where.widthSt} and
+            </if>
+            <if test="where.widthEd!=null">
+                `width` &lt;= #{where.widthEd} and
+            </if>
+                <if test="where.heightList != null">
+                    `height` in
+                    <foreach collection="where.heightList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.heightSt !=null">
+                `height` >= #{where.heightSt} and
+            </if>
+            <if test="where.heightEd!=null">
+                `height` &lt;= #{where.heightEd} and
+            </if>
+        </trim>
+    </update>
+    <resultMap type="com.tdeado.file.entity.FileImages" id="FileImagesMap">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="path" column="path"/>
+        <result property="filename" column="filename"/>
+        <result property="address" column="address"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="source" column="source"/>
+        <result property="thumbnail" column="thumbnail"/>
+        <result property="size" column="size"/>
+        <result property="width" column="width"/>
+        <result property="height" column="height"/>
+    </resultMap>
+
+
+    <select id="queryFileImages" resultMap="FileImagesMap">
+        select
+        <include refid="baseResult"></include>
+        from  `td_file_images`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="type != null and type!=''">
+                `type` = #{type} and
+            </if>
+            <if test="path != null and path!=''">
+                `path` = #{path} and
+            </if>
+            <if test="filename != null and filename!=''">
+                `filename` = #{filename} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source} and
+            </if>
+            <if test="thumbnail != null and thumbnail!=''">
+                `thumbnail` = #{thumbnail} and
+            </if>
+            <if test="size != null">
+                `size` = #{size} and
+            </if>
+            <if test="width != null">
+                `width` = #{width} and
+            </if>
+            <if test="height != null">
+                `height` = #{height} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.file.entity.FileImages$QueryBuilder) == true">
+                <if test="idList != null">
+                    `id` in
+                    <foreach collection="idList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                <if test="typeList != null">
+                    `type` in
+                    <foreach collection="typeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyType!=null and fuzzyType.size()>0">
+                    (
+                    <foreach collection="fuzzyType"  separator="or" item="item">
+                        `Type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyType!=null and rightFuzzyType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyType"  separator="or" item="item">
+                        `Type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="pathList != null">
+                    `path` in
+                    <foreach collection="pathList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyPath!=null and fuzzyPath.size()>0">
+                    (
+                    <foreach collection="fuzzyPath"  separator="or" item="item">
+                        `Path` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPath!=null and rightFuzzyPath.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPath"  separator="or" item="item">
+                        `Path` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="filenameList != null">
+                    `filename` in
+                    <foreach collection="filenameList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyFilename!=null and fuzzyFilename.size()>0">
+                    (
+                    <foreach collection="fuzzyFilename"  separator="or" item="item">
+                        `Filename` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFilename!=null and rightFuzzyFilename.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFilename"  separator="or" item="item">
+                        `Filename` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="addressList != null">
+                    `address` in
+                    <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="createTimeList != null">
+                    `create_time` in
+                    <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                <if test="updateTimeList != null">
+                    `update_time` in
+                    <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                <if test="sourceList != null">
+                    `source` in
+                    <foreach collection="sourceList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzySource!=null and fuzzySource.size()>0">
+                    (
+                    <foreach collection="fuzzySource"  separator="or" item="item">
+                        `Source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySource!=null and rightFuzzySource.size()>0">
+                    (
+                    <foreach collection="rightFuzzySource"  separator="or" item="item">
+                        `Source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="thumbnailList != null">
+                    `thumbnail` in
+                    <foreach collection="thumbnailList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyThumbnail!=null and fuzzyThumbnail.size()>0">
+                    (
+                    <foreach collection="fuzzyThumbnail"  separator="or" item="item">
+                        `Thumbnail` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyThumbnail!=null and rightFuzzyThumbnail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyThumbnail"  separator="or" item="item">
+                        `Thumbnail` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="sizeList != null">
+                    `size` in
+                    <foreach collection="sizeList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="sizeSt !=null">
+                    `size` >= #{sizeSt} and
+                </if>
+                <if test="sizeEd!=null">
+                    `size` &lt;= #{sizeEd} and
+                </if>
+                <if test="widthList != null">
+                    `width` in
+                    <foreach collection="widthList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="widthSt !=null">
+                    `width` >= #{widthSt} and
+                </if>
+                <if test="widthEd!=null">
+                    `width` &lt;= #{widthEd} and
+                </if>
+                <if test="heightList != null">
+                    `height` in
+                    <foreach collection="heightList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="heightSt !=null">
+                    `height` >= #{heightSt} and
+                </if>
+                <if test="heightEd!=null">
+                    `height` &lt;= #{heightEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryFileImagesLimit1" resultMap="FileImagesMap">
+        select
+        <include refid="baseResult"></include>
+        from  `td_file_images`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="id != null">
+                `id` = #{id} and
+            </if>
+            <if test="type != null and type!=''">
+                `type` = #{type} and
+            </if>
+            <if test="path != null and path!=''">
+                `path` = #{path} and
+            </if>
+            <if test="filename != null and filename!=''">
+                `filename` = #{filename} and
+            </if>
+            <if test="address != null and address!=''">
+                `address` = #{address} and
+            </if>
+            <if test="createTime != null">
+                `create_time` = #{createTime} and
+            </if>
+            <if test="updateTime != null">
+                `update_time` = #{updateTime} and
+            </if>
+            <if test="source != null and source!=''">
+                `source` = #{source} and
+            </if>
+            <if test="thumbnail != null and thumbnail!=''">
+                `thumbnail` = #{thumbnail} and
+            </if>
+            <if test="size != null">
+                `size` = #{size} and
+            </if>
+            <if test="width != null">
+                `width` = #{width} and
+            </if>
+            <if test="height != null">
+                `height` = #{height} and
+            </if>
+            <if test = "(_parameter instanceof com.tdeado.file.entity.FileImages$QueryBuilder) == true">
+                    <if test="idList != null">
+                        `id` in
+                        <foreach collection="idList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="idSt !=null">
+                    `id` >= #{idSt} and
+                </if>
+                <if test="idEd!=null">
+                    `id` &lt;= #{idEd} and
+                </if>
+                    <if test="typeList != null">
+                        `type` in
+                        <foreach collection="typeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyType!=null and fuzzyType.size()>0">
+                    (
+                    <foreach collection="fuzzyType"  separator="or" item="item">
+                        `Type` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyType!=null and rightFuzzyType.size()>0">
+                    (
+                    <foreach collection="rightFuzzyType"  separator="or" item="item">
+                        `Type` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="pathList != null">
+                        `path` in
+                        <foreach collection="pathList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyPath!=null and fuzzyPath.size()>0">
+                    (
+                    <foreach collection="fuzzyPath"  separator="or" item="item">
+                        `Path` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyPath!=null and rightFuzzyPath.size()>0">
+                    (
+                    <foreach collection="rightFuzzyPath"  separator="or" item="item">
+                        `Path` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="filenameList != null">
+                        `filename` in
+                        <foreach collection="filenameList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyFilename!=null and fuzzyFilename.size()>0">
+                    (
+                    <foreach collection="fuzzyFilename"  separator="or" item="item">
+                        `Filename` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyFilename!=null and rightFuzzyFilename.size()>0">
+                    (
+                    <foreach collection="rightFuzzyFilename"  separator="or" item="item">
+                        `Filename` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="addressList != null">
+                        `address` in
+                        <foreach collection="addressList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyAddress!=null and fuzzyAddress.size()>0">
+                    (
+                    <foreach collection="fuzzyAddress"  separator="or" item="item">
+                        `Address` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyAddress!=null and rightFuzzyAddress.size()>0">
+                    (
+                    <foreach collection="rightFuzzyAddress"  separator="or" item="item">
+                        `Address` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="createTimeList != null">
+                        `create_time` in
+                        <foreach collection="createTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="createTimeSt !=null">
+                    `create_time` >= #{createTimeSt} and
+                </if>
+                <if test="createTimeEd!=null">
+                    `create_time` &lt;= #{createTimeEd} and
+                </if>
+                    <if test="updateTimeList != null">
+                        `update_time` in
+                        <foreach collection="updateTimeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="updateTimeSt !=null">
+                    `update_time` >= #{updateTimeSt} and
+                </if>
+                <if test="updateTimeEd!=null">
+                    `update_time` &lt;= #{updateTimeEd} and
+                </if>
+                    <if test="sourceList != null">
+                        `source` in
+                        <foreach collection="sourceList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzySource!=null and fuzzySource.size()>0">
+                    (
+                    <foreach collection="fuzzySource"  separator="or" item="item">
+                        `Source` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzySource!=null and rightFuzzySource.size()>0">
+                    (
+                    <foreach collection="rightFuzzySource"  separator="or" item="item">
+                        `Source` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="thumbnailList != null">
+                        `thumbnail` in
+                        <foreach collection="thumbnailList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyThumbnail!=null and fuzzyThumbnail.size()>0">
+                    (
+                    <foreach collection="fuzzyThumbnail"  separator="or" item="item">
+                        `Thumbnail` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyThumbnail!=null and rightFuzzyThumbnail.size()>0">
+                    (
+                    <foreach collection="rightFuzzyThumbnail"  separator="or" item="item">
+                        `Thumbnail` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="sizeList != null">
+                        `size` in
+                        <foreach collection="sizeList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="sizeSt !=null">
+                    `size` >= #{sizeSt} and
+                </if>
+                <if test="sizeEd!=null">
+                    `size` &lt;= #{sizeEd} and
+                </if>
+                    <if test="widthList != null">
+                        `width` in
+                        <foreach collection="widthList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="widthSt !=null">
+                    `width` >= #{widthSt} and
+                </if>
+                <if test="widthEd!=null">
+                    `width` &lt;= #{widthEd} and
+                </if>
+                    <if test="heightList != null">
+                        `height` in
+                        <foreach collection="heightList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="heightSt !=null">
+                    `height` >= #{heightSt} and
+                </if>
+                <if test="heightEd!=null">
+                    `height` &lt;= #{heightEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `id`,
+        `type`,
+        `path`,
+        `filename`,
+        `address`,
+        `create_time`,
+        `update_time`,
+        `source`,
+        `thumbnail`,
+        `size`,
+        `width`,
+        `height`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof com.tdeado.file.entity.FileImages$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.id==true">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.fetchFields.type==true">
+                        `type`,
+                    </if>
+                    <if test="fetchFields.fetchFields.path==true">
+                        `path`,
+                    </if>
+                    <if test="fetchFields.fetchFields.filename==true">
+                        `filename`,
+                    </if>
+                    <if test="fetchFields.fetchFields.address==true">
+                        `address`,
+                    </if>
+                    <if test="fetchFields.fetchFields.createTime==true">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.updateTime==true">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.fetchFields.source==true">
+                        `source`,
+                    </if>
+                    <if test="fetchFields.fetchFields.thumbnail==true">
+                        `thumbnail`,
+                    </if>
+                    <if test="fetchFields.fetchFields.size==true">
+                        `size`,
+                    </if>
+                    <if test="fetchFields.fetchFields.width==true">
+                        `width`,
+                    </if>
+                    <if test="fetchFields.fetchFields.height==true">
+                        `height`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.id==null">
+                        `id`,
+                    </if>
+                    <if test="fetchFields.excludeFields.type==null">
+                        `type`,
+                    </if>
+                    <if test="fetchFields.excludeFields.path==null">
+                        `path`,
+                    </if>
+                    <if test="fetchFields.excludeFields.filename==null">
+                        `filename`,
+                    </if>
+                    <if test="fetchFields.excludeFields.address==null">
+                        `address`,
+                    </if>
+                    <if test="fetchFields.excludeFields.createTime==null">
+                        `create_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.updateTime==null">
+                        `update_time`,
+                    </if>
+                    <if test="fetchFields.excludeFields.source==null">
+                        `source`,
+                    </if>
+                    <if test="fetchFields.excludeFields.thumbnail==null">
+                        `thumbnail`,
+                    </if>
+                    <if test="fetchFields.excludeFields.size==null">
+                        `size`,
+                    </if>
+                    <if test="fetchFields.excludeFields.width==null">
+                        `width`,
+                    </if>
+                    <if test="fetchFields.excludeFields.height==null">
+                        `height`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof com.tdeado.file.entity.FileImages$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+    <delete id="delFileImages" parameterType="int">
+        delete from td_file_images where id=#{id}
+    </delete>
+</mapper>
