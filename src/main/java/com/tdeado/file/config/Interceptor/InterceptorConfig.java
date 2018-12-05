@@ -17,23 +17,16 @@ import javax.servlet.MultipartConfigElement;
 public class InterceptorConfig extends WebMvcConfigurerAdapter {
     private InterceptorRegistration obj;
 
-
     /**
      * 在配置文件中配置的文件保存路径
      */
-    @Value("${img.location}")
-    private String location;
     @Value("${img.directory}")
     private String directory;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //这里可以添加多个拦截器  
         obj = registry.addInterceptor(new LoginTimeInterceptor());
-        obj.addPathPatterns("/**");
-        obj.excludePathPatterns("/user/login");
-        obj.excludePathPatterns("/boss/**");
-        obj.excludePathPatterns("/demo/**");
-        obj.excludePathPatterns("/api/**");
+//        obj.addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 
@@ -43,18 +36,12 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
         //文件最大KB,MB
         factory.setMaxFileSize("5MB");
         //设置总上传数据总大小
-        factory.setMaxRequestSize("20MB");
+        factory.setMaxRequestSize("50MB");
         return factory.createMultipartConfig();
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/boss/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/templates/");
-        registry.addResourceHandler("/demo/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/demo/");
-        registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/static/");
-        registry.addResourceHandler("/MP_verify_fzmfiZQmYt6UDmm1.txt").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/static//MP_verify_fzmfiZQmYt6UDmm1.txt");
-        //映射图片保存地址ca.cert.pem
-        registry.addResourceHandler("/upload/**").addResourceLocations("file:"+directory+location);
-//        registry.addResourceHandler("/OTA/**").addResourceLocations("file:D:/OTA/");
+        registry.addResourceHandler("/**").addResourceLocations("file:"+directory);
         super.addResourceHandlers(registry);
     }
 }  
