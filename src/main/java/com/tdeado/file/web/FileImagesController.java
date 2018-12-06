@@ -28,11 +28,11 @@ public class FileImagesController extends BaseFileImagesController {
     private String directory;
     @Value("${img.domain}")
     private String domain;
-    @PutMapping("/uploadMultipartImage")
+    @RequestMapping("/uploadMultipartImage")
     public Ret uploadMultipartImage(@RequestParam("files") MultipartFile[] multipartFile) {
         return Ret.ok(null);
     }
-    @PutMapping("/uploadSingleImage")
+    @RequestMapping("/uploadSingleImage")
     public Ret uploadSingleImage(@RequestParam("file") MultipartFile multipartFile) {
         String suffix = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1);
         if (multipartFile.isEmpty() || StringUtils.isBlank(multipartFile.getOriginalFilename())) {
